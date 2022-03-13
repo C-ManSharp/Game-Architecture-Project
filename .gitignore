@@ -396,7 +396,3 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-# Unignore
-!/dependencies/*
-!/dependencies/Microsoft DirectX SDK (June 2010)/Lib
