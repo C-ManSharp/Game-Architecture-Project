@@ -22,3 +22,5 @@ Weaknesses:
 - Object Pooling could have been used with regards to instantiating new asteroids, enemy ships, and bullets.
 
 This project was compiled using Visual Studio 2022 Community Edition.
+
+An old version of DirectX is required to run the project; this is included in the dependencies folder.
