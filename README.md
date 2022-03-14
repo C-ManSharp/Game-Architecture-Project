@@ -26,9 +26,9 @@ This project was compiled using Visual Studio 2022 Community Edition.
 An old version of DirectX is required to run the project; this is included in the dependencies folder.
 
 Controls:
-W: Move forward
-A: Rotate Left
-D: Rotate Right
-Z: Dodge
-1 & 2: Change weapon
+- W: Move forward
+- A: Rotate Left
+- D: Rotate Right
+- Z: Dodge
+- 1 & 2: Change weapon
 
