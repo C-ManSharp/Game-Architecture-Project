@@ -68,22 +68,6 @@ void GruntEnemyShipPhysicsComponent::update(GameObject& gameObject, float frameT
 			spawnExplosion(gameObject);
 			Event e = createEvent(gameObject, EventType::GRUNT_ENEMY_SHIP_DEATH, collider);
 			gameObject.eventDispatcher->dispatchEvent(e);
-			/*
-			if (e.killer)
-			{
-				e.killer->creator = nullptr;
-				e.killer->killer = nullptr;
-				e.killer->eventDispatcher = nullptr;
-			}
-			if (e.source)
-			{
-				e.source->creator = nullptr;
-				e.source->killer = nullptr;
-				e.source->eventDispatcher = nullptr;
-			}
-			e.killer = nullptr;
-			e.source = nullptr;
-			*/
 			gameObject.eventDispatcher = nullptr;
 			gameObject.creator = nullptr;
 			gameObject.killer = nullptr;
