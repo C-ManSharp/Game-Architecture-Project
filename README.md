@@ -20,7 +20,8 @@ Some weaknesses:
 - Could have used the observer pattern which would have reduced dependencies across the entire program.
 - The Open closed principle has been violated with regards to the Level Manager. If a developer were to create a new type of game object that had to trigger an event that the Level Manager had to respond to. Then the handleEvent(Event& event) function would need to change.
 - Object Pooling could have been used with regards to instantiating new asteroids, enemy ships, and bullets.
-- Some of the components such as the AsteroidPhysicsComponent clear pointers to other components inside the update method. Destroying references to other objects could have been handled better.
+- Some of the components such as the AstroidPhysicsComponent clear pointers to other components inside the update method. Destroying references to other objects could have been handled better.
+- The word asteroid is spelled incorrectly throughout the project.
 
 This project was compiled using Visual Studio 2022 Community Edition.
 
