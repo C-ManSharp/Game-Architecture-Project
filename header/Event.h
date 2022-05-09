@@ -8,7 +8,7 @@ This struct contains data that is sent to the level manager when an event is tri
 class GameObject;
 enum class ObjectType;
 
-enum class EventType { UNKNOWN, PLAYER_DEATH, GRUNT_ENEMY_SHIP_DEATH, ASTROID_DEATH, 
+enum class EventType { UNKNOWN, PLAYER_DEATH, GRUNT_ENEMY_SHIP_DEATH, ASTEROID_DEATH, 
 	HEALTH_PACK_PICKUP};
 
 struct Event

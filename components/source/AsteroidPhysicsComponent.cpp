@@ -1,4 +1,4 @@
-#include "../header/AstroidPhysicsComponent.h"
+#include "../header/AsteroidPhysicsComponent.h"
 #include "../../header/GameObject.h"
 #include "../../commands/header/Command.h"
 #include "../../header/Shapes.h"
@@ -7,14 +7,14 @@
 #include "../../header/Event.h"
 #include "../../header/EventDispatcher.h"
 
-AstroidPhysicsComponent::AstroidPhysicsComponent(Circle2D collisionShape) : 
+AsteroidPhysicsComponent::AsteroidPhysicsComponent(Circle2D collisionShape) : 
 acceleration{ 300.0f }, rotationSpeed{ 1.0f }, friction{ -0.5f }, angle{ 0.0f }, frameTime{ 0.0f }, 
 collisionShape{ collisionShape }, collisionRadius{ 60.0f }, ownerPosition{Vector2D(0.0f, 0.0f)}, 
 COLLISION_RAIDUS_WITH_NO_SCALING{ 60.0f }, healthComponent{ nullptr }, damageToTake{ 0 }
 {
 }
 
-AstroidPhysicsComponent::AstroidPhysicsComponent() :
+AsteroidPhysicsComponent::AsteroidPhysicsComponent() :
 acceleration{ 300.0f }, rotationSpeed{ 1.0f }, friction{ -0.5f }, angle{ 0.0f },
 frameTime{ 0.0f }, collisionShape{ Circle2D() }, collisionRadius{ 60.0f }, 
 ownerPosition{ Vector2D(0.0f, 0.0f) }, COLLISION_RAIDUS_WITH_NO_SCALING{ 60.0f }, 
@@ -22,7 +22,7 @@ healthComponent{ nullptr }, damageToTake{ 0 }
 {
 }
 
-void AstroidPhysicsComponent::initialise(std::shared_ptr<HealthComponent> healthComponent, 
+void AsteroidPhysicsComponent::initialise(std::shared_ptr<HealthComponent> healthComponent,
 	float acceleration, float rotationSpeed, float friction, float scale, Vector2D velocity)
 {
 	this->healthComponent = healthComponent;
@@ -33,7 +33,7 @@ void AstroidPhysicsComponent::initialise(std::shared_ptr<HealthComponent> health
 	collisionRadius = COLLISION_RAIDUS_WITH_NO_SCALING * scale;
 }
 
-void AstroidPhysicsComponent::initialise(float acceleration, float rotationSpeed, float friction, 
+void AsteroidPhysicsComponent::initialise(float acceleration, float rotationSpeed, float friction,
 	float scale, Vector2D velocity)
 {
 	this->acceleration = acceleration;
@@ -43,7 +43,7 @@ void AstroidPhysicsComponent::initialise(float acceleration, float rotationSpeed
 	collisionRadius = COLLISION_RAIDUS_WITH_NO_SCALING * scale;
 }
 
-void AstroidPhysicsComponent::update(GameObject& gameObject, float frameTime)
+void AsteroidPhysicsComponent::update(GameObject& gameObject, float frameTime)
 {
 	ownerPosition = gameObject.position;
 	this->frameTime = frameTime;
@@ -60,7 +60,7 @@ void AstroidPhysicsComponent::update(GameObject& gameObject, float frameTime)
 
 		if (healthComponent->getHealth() <= 0)
 		{
-			Event e = createEvent(gameObject, EventType::ASTROID_DEATH, collider);
+			Event e = createEvent(gameObject, EventType::ASTEROID_DEATH, collider);
 			gameObject.eventDispatcher->dispatchEvent(e);
 
 			gameObject.eventDispatcher = nullptr;
@@ -75,7 +75,7 @@ void AstroidPhysicsComponent::update(GameObject& gameObject, float frameTime)
 			collider = nullptr;
 		}
 		if (healthComponent->getHealth() <= 0 && gameObject.creatorObjectType == ObjectType::UNKOWN)
-			spawnChildAstroids(gameObject);
+			spawnChildAsteroids(gameObject);
 	}
 
 	if (collider)
@@ -89,56 +89,56 @@ void AstroidPhysicsComponent::update(GameObject& gameObject, float frameTime)
 	resetPositionIfObjectHasLeftScreen(gameObject);
 }
 
-void AstroidPhysicsComponent::spawnChildAstroids(GameObject& gameObject)
+void AsteroidPhysicsComponent::spawnChildAsteroids(GameObject& gameObject)
 {
 	InstantObjectSpawnerComponent instantObjectSpawnerComponentType;
 	std::shared_ptr<InstantObjectSpawnerComponent> objectSpawnerComponent =
 		gameObject.getComponentFromClassAndName(instantObjectSpawnerComponentType,
-			L"astroid_instant_object_spawner_component");
-	const int NUMBER_OF_ASTROIDS_TO_SPAWN = (int)rand() % 3 + 2;
-	for (int i = 0; i < NUMBER_OF_ASTROIDS_TO_SPAWN; i++)
+			L"asteroid_instant_object_spawner_component");
+	const int NUMBER_OF_asteroidS_TO_SPAWN = (int)rand() % 3 + 2;
+	for (int i = 0; i < NUMBER_OF_asteroidS_TO_SPAWN; i++)
 	{
 		if (objectSpawnerComponent)
 		{
-			std::shared_ptr<GameObject> astroid = objectSpawnerComponent->createGameObject(
-				L"astroid");
-			if (astroid)
+			std::shared_ptr<GameObject> asteroid = objectSpawnerComponent->createGameObject(
+				L"asteroid");
+			if (asteroid)
 			{
-				astroid->scale = 0.5;
-				astroid->creatorObjectType = gameObject.getObjectType();
-				astroid->invincibleOnSpawn = false;
-				AstroidPhysicsComponent astroidPhysicsComponentType;
-				std::shared_ptr<AstroidPhysicsComponent> astroidPhysicsComponent =
-					astroid->getComponentFromClassAndName(astroidPhysicsComponentType,
-						L"astroid_physics_component");
-				if (astroidPhysicsComponent)
+				asteroid->scale = 0.5;
+				asteroid->creatorObjectType = gameObject.getObjectType();
+				asteroid->invincibleOnSpawn = false;
+				AsteroidPhysicsComponent asteroidPhysicsComponentType;
+				std::shared_ptr<AsteroidPhysicsComponent> asteroidPhysicsComponent =
+					asteroid->getComponentFromClassAndName(asteroidPhysicsComponentType,
+						L"asteroid_physics_component");
+				if (asteroidPhysicsComponent)
 				{
 					Vector2D pos;
 					Vector2D velocity;
 					pos.setBearing(rand() % 628 / 100.0f, rand() % -30 + 30.0f);
 					velocity.setBearing(rand() % 628 / 100.0f, rand() % -80 + 80.0f);
 					pos += gameObject.position;
-					astroid->position = pos;
-					astroidPhysicsComponent->initialise(300.0f, 0.3f,
-						-0.8f, astroid->scale, velocity);
-					objectSpawnerComponent->spawnGameObject(astroid);
+					asteroid->position = pos;
+					asteroidPhysicsComponent->initialise(300.0f, 0.3f,
+						-0.8f, asteroid->scale, velocity);
+					objectSpawnerComponent->spawnGameObject(asteroid);
 				}
 			}
 		}
 	}
 }
 
-const IShape2D& AstroidPhysicsComponent::getShape() const
+const IShape2D& AsteroidPhysicsComponent::getShape() const
 {
 	return collisionShape;
 }
 
-void AstroidPhysicsComponent::notifyCollision(const GameObject& gameObject)
+void AsteroidPhysicsComponent::notifyCollision(const GameObject& gameObject)
 {
 	Vector2D normal = (ownerPosition - gameObject.position).unitVector();
 	switch (gameObject.getObjectType())
 	{
-		case ObjectType::ASTROID:
+		case ObjectType::ASTEROID:
 			if (normal * velocity < 0)
 			{
 				velocity = velocity - 2 * (velocity * normal) * normal;
@@ -163,6 +163,6 @@ void AstroidPhysicsComponent::notifyCollision(const GameObject& gameObject)
 	}
 }
 
-AstroidPhysicsComponent::~AstroidPhysicsComponent()
+AsteroidPhysicsComponent::~AsteroidPhysicsComponent()
 {
 }

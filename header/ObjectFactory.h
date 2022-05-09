@@ -16,7 +16,7 @@ class ObjectFactory
 {
 private:
 	std::shared_ptr<GameObject> createPlayerShip() const;
-	std::shared_ptr<GameObject> createAstroid() const;
+	std::shared_ptr<GameObject> createAsteroid() const;
 	std::shared_ptr<GameObject> createExplosion() const;
 	std::shared_ptr<GameObject> createPlasmaBullet() const;
 	std::shared_ptr<GameObject> createMachineGunBullet() const;

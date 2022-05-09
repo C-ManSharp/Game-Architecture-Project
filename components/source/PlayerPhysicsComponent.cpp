@@ -144,7 +144,7 @@ void PlayerPhysicsComponent::notifyCollision(const GameObject& gameObject)
 {
 	switch (gameObject.getObjectType())
 	{
-		case ObjectType::ASTROID:
+		case ObjectType::ASTEROID:
 			damageToTake = gameObject.damage;
 			break;
 		case ObjectType::PLASMA_BULLET:

@@ -127,7 +127,7 @@ void GruntEnemyShipPhysicsComponent::notifyCollision(const GameObject& gameObjec
 {
 	switch (gameObject.getObjectType())
 	{
-		case ObjectType::ASTROID:
+		case ObjectType::ASTEROID:
 			damageToTake = gameObject.damage;
 			break;
 		case ObjectType::PLASMA_BULLET:

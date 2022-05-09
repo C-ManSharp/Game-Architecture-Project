@@ -93,7 +93,7 @@
     <ClInclude Include="components\header\AnimationComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="components\header\AstroidPhysicsComponent.h">
+    <ClInclude Include="components\header\AsteroidPhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="components\header\CollisionComponent.h">
@@ -218,7 +218,7 @@
     <ClCompile Include="components\source\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="components\source\AstroidPhysicsComponent.cpp">
+    <ClCompile Include="components\source\AsteroidPhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="components\source\CollisionComponent.cpp">

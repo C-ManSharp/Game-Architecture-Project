@@ -3,7 +3,7 @@
 #include "../components/header/Component.h"
 #include "../components/header/TextRenderComponent.h"
 #include "../components/header/IntegerRenderComponent.h"
-#include "../components/header/AstroidPhysicsComponent.h"
+#include "../components/header/AsteroidPhysicsComponent.h"
 #include "../components/header/CollisionComponent.h"
 #include "../components/header/HealthComponent.h"
 #include "../components/header/AIComponent.h"
@@ -77,7 +77,7 @@ void LevelManager::handleEvent(Event& event)
 					addScore(event.source->getObjectType());
 			}
 			break;
-		case EventType::ASTROID_DEATH:
+		case EventType::ASTEROID_DEATH:
 			if (event.source->creatorObjectType == ObjectType::UNKOWN)
 				astroidCount--;
 
@@ -100,7 +100,7 @@ void LevelManager::addScore(ObjectType victimObjectType)
 		case ObjectType::GRUNT_ENEMY_SHIP:
 			score += 20;
 			break;
-		case ObjectType::ASTROID:
+		case ObjectType::ASTEROID:
 			score += 5;
 			break;
 	}
@@ -158,34 +158,34 @@ void LevelManager::spawnAstroid()
 {
 	if (instantObjectSpawnerComponent)
 	{
-		std::shared_ptr<GameObject> astroid =
-			instantObjectSpawnerComponent->createGameObject(L"astroid");
-		if (astroid)
+		std::shared_ptr<GameObject> asteroid =
+			instantObjectSpawnerComponent->createGameObject(L"asteroid");
+		if (asteroid)
 		{
-			AstroidPhysicsComponent astroidPhysicsComponent;
+			AsteroidPhysicsComponent astroidPhysicsComponent;
 			Vector2D pos;
 			Vector2D velocity;
 			pos.setBearing(rand() % 628 / 100.0f, rand() % 500 + 500.0f);
 			velocity.setBearing(rand() % 628 / 100.0f, rand() % -80 + 80.0f);
-			astroid->position = pos;
+			asteroid->position = pos;
 
-			std::shared_ptr<AstroidPhysicsComponent> physicsComp =
-				astroid->getComponentFromClassAndName(astroidPhysicsComponent,
-					L"astroid_physics_component");
+			std::shared_ptr<AsteroidPhysicsComponent> physicsComp =
+				asteroid->getComponentFromClassAndName(astroidPhysicsComponent,
+					L"asteroid_physics_component");
 			if (physicsComp)
 			{
-				HealthComponent astroidHealthComponentType;
-				std::shared_ptr<HealthComponent> astroidHealthComponent =
-					astroid->getComponentFromClassAndName(astroidHealthComponentType,
-						L"astroid_health_component");
-				if (astroidHealthComponent)
+				HealthComponent asteroidHealthComponentType;
+				std::shared_ptr<HealthComponent> asteroidHealthComponent =
+					asteroid->getComponentFromClassAndName(asteroidHealthComponentType,
+						L"asteroid_health_component");
+				if (asteroidHealthComponent)
 				{
-					physicsComp->initialise(astroidHealthComponent, 300.0f, 0.3f, -0.8f, astroid->scale,
+					physicsComp->initialise(asteroidHealthComponent, 300.0f, 0.3f, -0.8f, asteroid->scale,
 						velocity);
 					if (!Game::instance.getGameObjectManager().shapeIntersectsWithAGameObject(
 						physicsComp->getShape()))
 					{
-						instantObjectSpawnerComponent->spawnGameObject(astroid);
+						instantObjectSpawnerComponent->spawnGameObject(asteroid);
 						astroidCount++;
 					}
 				}

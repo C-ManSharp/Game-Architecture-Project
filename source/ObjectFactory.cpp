@@ -4,7 +4,7 @@
 #include "../components/header/ImageRenderComponent.h"
 #include "../components/header/IntegerRenderComponent.h"
 #include "../components/header/PlayerPhysicsComponent.h"
-#include "../components/header/AstroidPhysicsComponent.h"
+#include "../components/header/AsteroidPhysicsComponent.h"
 #include "../components/header/InputComponent.h"
 #include "../components/header/CollisionComponent.h"
 #include "../components/header/AnimationComponent.h"
@@ -38,8 +38,8 @@ std::shared_ptr<GameObject>ObjectFactory::createGameObject(std::wstring objectNa
 	if (objectNameLower == L"playership")
 		return createPlayerShip();
 	
-	if (objectNameLower == L"astroid")
-		return createAstroid();
+	if (objectNameLower == L"asteroid")
+		return createAsteroid();
 
 	if (objectNameLower == L"expolsion")
 		return createExplosion();
@@ -193,50 +193,51 @@ std::shared_ptr<GameObject>ObjectFactory::createPlayerShip() const
 	return playerSpaceship;
 }
 
-std::shared_ptr<GameObject>ObjectFactory::createAstroid() const
+std::shared_ptr<GameObject>ObjectFactory::createAsteroid() const
 {
-	const float ASTROID_SCALE = 1.0f;
+	const float ASTEROID_SCALE = 1.0f;
 
-	std::shared_ptr<GameObject>astroid =
+	std::shared_ptr<GameObject>asteroid =
 		std::make_shared<GameObject>(
-			std::make_shared<EventDispatcher>(Game::instance.getLevelManager()), ObjectType::ASTROID);
+			std::make_shared<EventDispatcher>(Game::instance.getLevelManager()), ObjectType::ASTEROID);
 
-	astroid->damage = 100;
-	astroid->scale = ASTROID_SCALE;
+	asteroid->damage = 100;
+	asteroid->scale = ASTEROID_SCALE;
 	
-	PictureIndex astroidPicture = MyDrawEngine::GetInstance()->LoadPicture(L"assets/rock4.bmp");
-	std::shared_ptr<ImageRenderComponent>astroidRenderComponent = 
+	PictureIndex asteroidPicture = MyDrawEngine::GetInstance()->LoadPicture(L"assets/rock4.bmp");
+	std::shared_ptr<ImageRenderComponent>asteroidRenderComponent = 
 		std::make_shared<ImageRenderComponent>();
-	astroidRenderComponent->initialise(astroidPicture, Vector2D(0.0f, 0.0f), true, true, 0.0f,
+	asteroidRenderComponent->initialise(asteroidPicture, Vector2D(0.0f, 0.0f), true, true, 0.0f,
 		0.0f, true, 1.0f);
 
-	std::shared_ptr<HealthComponent> astroidHealthComponent = std::make_shared<HealthComponent>();
-	astroidHealthComponent->initialise(nullptr, 60, 60);
-	astroidHealthComponent->setComponentName(L"astroid_health_component");
+	std::shared_ptr<HealthComponent> asteroidHealthComponent = std::make_shared<HealthComponent>();
+	asteroidHealthComponent->initialise(nullptr, 60, 60);
+	asteroidHealthComponent->setComponentName(L"asteroid_health_component");
 
-	Circle2D astroidCollisionShape = Circle2D();
-	std::shared_ptr<AstroidPhysicsComponent>astroidPhysicsComponent = 
-		std::make_shared<AstroidPhysicsComponent>(astroidCollisionShape);
-	astroidPhysicsComponent->initialise(astroidHealthComponent, 300.0f, 0.3f, -0.5f, ASTROID_SCALE, 
+	Circle2D asteroidCollisionShape = Circle2D();
+
+	std::shared_ptr<AsteroidPhysicsComponent>asteroidPhysicsComponent = 
+		std::make_shared<AsteroidPhysicsComponent>(asteroidCollisionShape);
+	asteroidPhysicsComponent->initialise(asteroidHealthComponent, 300.0f, 0.3f, -0.5f, ASTEROID_SCALE, 
 		Vector2D(0.0f, 0.0f));
-	astroidPhysicsComponent->setComponentName(L"astroid_physics_component");
+	asteroidPhysicsComponent->setComponentName(L"asteroid_physics_component");
 
-	std::shared_ptr<CollisionComponent>astroidCollisionComponent = 
-		std::make_shared<CollisionComponent>(astroidPhysicsComponent, *astroid);
-	astroidCollisionComponent->setComponentName(L"collision_component");
+	std::shared_ptr<CollisionComponent>asteroidCollisionComponent = 
+		std::make_shared<CollisionComponent>(asteroidPhysicsComponent, *asteroid);
+	asteroidCollisionComponent->setComponentName(L"collision_component");
 
-	std::shared_ptr<InstantObjectSpawnerComponent> astroidInstantObjectSpawnerComponent =
+	std::shared_ptr<InstantObjectSpawnerComponent> asteroidInstantObjectSpawnerComponent =
 		std::make_shared<InstantObjectSpawnerComponent>();
-	astroidInstantObjectSpawnerComponent->initialise(std::make_shared<ObjectFactory>());
-	astroidInstantObjectSpawnerComponent->setComponentName(L"astroid_instant_object_spawner_component");
+	asteroidInstantObjectSpawnerComponent->initialise(std::make_shared<ObjectFactory>());
+	asteroidInstantObjectSpawnerComponent->setComponentName(L"asteroid_instant_object_spawner_component");
 
-	astroid->addComponent(astroidRenderComponent);
-	astroid->addComponent(astroidPhysicsComponent);
-	astroid->addComponent(astroidCollisionComponent);
-	astroid->addComponent(astroidHealthComponent);
-	astroid->addComponent(astroidInstantObjectSpawnerComponent);
+	asteroid->addComponent(asteroidRenderComponent);
+	asteroid->addComponent(asteroidPhysicsComponent);
+	asteroid->addComponent(asteroidCollisionComponent);
+	asteroid->addComponent(asteroidHealthComponent);
+	asteroid->addComponent(asteroidInstantObjectSpawnerComponent);
 
-	return astroid;
+	return asteroid;
 }
 
 std::shared_ptr<GameObject>ObjectFactory::createExplosion() const
