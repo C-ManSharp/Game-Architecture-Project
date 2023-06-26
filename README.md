@@ -3,7 +3,7 @@ This project was created by me as part of an assignment for a 12-week module on 
 
 I received the maximum number of marks possible for the diagrams. I was three marks off achieving the maximum marks possible for the architecture of the program.
 
-The horrible pointer code in some of the upate methods was created to fix a memory leak. I discovered this leak hours before the assessment deadline so I had to fix it quickly. 
+The horrible pointer code in some of the upate methods was created to fix a memory leak. I discovered this leak hours before the assessment deadline so I had to fix it quickly. The AI for the ships does not work too well. Again, this was due to time constraints.
 
 This project was compiled using Visual Studio 2022 Community Edition.
 
